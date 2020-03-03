@@ -1,0 +1,24 @@
+include ../../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('post')
+  +e('post-inner')()
+    +e('user', {})
+      +e('image', {t: 'img'})(:src="post.image")
+      +e('name', {}) {{post.name}}
+    +e('content', {})(ref="content")
+      +e('title', {}) {{post.title}}
+      +e('text', {})() {{post.text}}
+    +e('actions', {})
+      +e('item', {})
+        +e('count', {}) {{post.marksCount}}
+        +e('icon', {t: 'img'})(v-if="likeStateClicked" src="/symbols/like.svg")
+        +e('icon', {t: 'img'})(v-else src="/symbols/like_inactive.svg")
+      +e('item', {})
+        +e('text', {}) Поделиться
+        +e('icon', {t: 'img'})(src="/symbols/share.svg")
+  +e('comments')
+    +e('title', {}) Комментарии
+    +e('content', {})(:style="{ maxHeight: contentHeight + 'px' }")
+      user-comment(v-for="comment in post.comments" :key="comment.id" :comment="comment")
+    +e('input-wrapper', {})

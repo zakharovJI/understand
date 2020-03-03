@@ -1,0 +1,23 @@
+.swiper-pagination-bullets {
+  .swiper-pagination-bullet {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $casper;
+    cursor: pointer;
+
+    &.swiper-pagination-bullet-active {
+      background-color: $green;
+      cursor: default;
+    }
+
+    &:not(.swiper-pagination-bullet-active):hover {
+      background-color: transparentize($black-rock, 0.5);
+    }
+
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+}

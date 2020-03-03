@@ -1,0 +1,117 @@
+.post {
+  $self: &;
+
+  display: flex;
+
+  &__post-inner {
+    width: 670px;
+    border: 1px solid $border-color;
+    border-radius: 2px;
+    background-color: white;
+
+    & #{$self}__user {
+      padding: 7px 21px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $border-color;
+      height: 40px;
+
+      & #{$self}__name {
+        font-size: 13px;
+        line-height: 16px;
+        font-family: "San Francisco Bold", sans-serif;
+        margin-bottom: 5px;
+        margin-left: 10px;
+      }
+
+      & #{$self}__image {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+    }
+
+
+    & #{$self}__content {
+      display: flex;
+      padding: 10px 20px 16px;
+      flex-direction: column;
+
+      & #{$self}__title {
+        font-size: 13px;
+        line-height: 16px;
+        font-family: "San Francisco Bold", sans-serif;
+      }
+
+      & #{$self}__text {
+        font-size: 13px;
+        line-height: 16px;
+        color: $secondary-font-color;
+        padding-top: 10px;
+        padding-right: 100px;
+      }
+    }
+
+    & #{$self}__actions {
+      background-color: $background-color;
+      display: flex;
+      padding: 12px 20px;
+      height: 40px;
+
+      & #{$self}__item {
+        display: flex;
+
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+
+        & #{$self}__count {
+          font-family: "San Francisco Bold", sans-serif;
+          font-size: 10px;
+          line-height: 12px;
+          letter-spacing: 0.1em;
+        }
+
+        & #{$self}__text {
+          font-size: 8px;
+          line-height: 10px;
+        }
+
+        & #{$self}__icon {
+          width: 12px;
+          height: 12px;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  &__comments {
+    width: 210px;
+    margin-left: 15px;
+    border: 1px solid $border-color;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+    & #{$self}__title {
+      font-size: 14px;
+      line-height: 17px;
+      padding: 12px 14px;
+      border-bottom: 1px solid $border-color;
+      height: 40px;
+    }
+
+    & #{$self}__content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: auto;
+    }
+
+    & #{$self}__input-wrapper {
+      background-color: $background-color;
+      height: 40px;
+    }
+  }
+}

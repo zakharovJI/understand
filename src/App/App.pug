@@ -1,0 +1,10 @@
+include ../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('app')(id='main')()
+  +b('header', {t: 'main-header', e: '&'})
+  +e('content')
+    +e('view', {t: 'div'})
+      post(v-for="post in postList" :key="post.id" :post="post")
+    +e('aside', {t: 'aside'})
+      news-aside(:newsList="newsList")

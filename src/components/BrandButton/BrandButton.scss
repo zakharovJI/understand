@@ -1,0 +1,24 @@
+.brand-button {
+  $self: &;
+
+  display: flex;
+  background-color: $primary-blue;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($primary-blue, 5%);
+  }
+
+  &:active {
+    background-color: darken($primary-blue, 10%);
+  }
+
+  &__label {
+    color: white;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 7px 33px;
+  }
+}

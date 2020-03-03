@@ -1,0 +1,68 @@
+.main-header {
+  $self: &;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+
+  &__content {
+    width: 100%;
+    max-width: 1170px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__menu-list {
+    margin-left: 89px;
+    display: flex;
+    align-items: center;
+  }
+
+
+  & #{$self}__item {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    color: $primary-font-color;
+    padding: 20px 20px;
+
+    &_active {
+      color: $primary-blue;
+    }
+  }
+
+  & #{$self}__actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+
+    & #{$self}__item {
+      padding: 20px 15px;
+      color: $primary-blue;
+
+      &:last-child{
+        color: black;
+        padding-right: 0;
+      }
+    }
+
+    & #{$self}__text {
+      color: inherit;
+    }
+
+    & #{$self}__icon {
+      color: inherit;
+      width: 12px;
+      height: 12px;
+      margin-right: 9px;
+
+      &:last-child {
+        margin-right: 0;
+        margin-left: 9px;
+      }
+    }
+  }
+}

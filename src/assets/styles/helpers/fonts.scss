@@ -1,0 +1,17 @@
+@mixin webFont($family, $file, $weight: normal, $style: normal, $path: "~@/assets/fonts/") {
+  @font-face {
+    font-family: $family;
+    src: url($path + $file + '.eot');
+    src: url($path + $file + '.eot?#iefix') format('embedded-opentype'),
+    url($path + $file + '.woff') format('woff'),
+    url($path + $file + '.ttf') format('truetype');
+    font-weight: $weight;
+    font-style: $style;
+    font-stretch: normal;
+  }
+}
+
+@include webFont('San Francisco Bold', 'SFUIText-Bold');
+@include webFont('San Francisco Light', 'SFUIText-Light');
+@include webFont('San Francisco Medium', 'SFUIText-Medium');
+@include webFont('San Francisco Regular', 'SFUIText-Regular');
