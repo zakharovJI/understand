@@ -3,6 +3,9 @@
 
   display: flex;
   flex-direction: column;
+  border: 1px solid $border-color;
+  position: sticky;
+  top: 15px;
 
   &__title {
     padding: 15px 30px;
@@ -15,7 +18,7 @@
   & #{$self}__news {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px 20px;
 
     & #{$self}__text {
       font-size: 12px;
@@ -24,7 +27,7 @@
     }
 
     & #{$self}__date {
-      font-size: 8px;
+      font-size: 10px;
       line-height: 10px;
       color: $primary-blue;
       margin-left: auto;

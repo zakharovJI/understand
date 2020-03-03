@@ -8,7 +8,7 @@ include ../../../node_modules/bempug/index
       +e('name', {}) {{post.name}}
     +e('content', {})(ref="content")
       +e('title', {}) {{post.title}}
-      +e('text', {})() {{post.text}}
+      +e('text', {})(v-html="post.text")
     +e('actions', {})
       +e('item', {})
         +e('count', {}) {{post.marksCount}}
@@ -19,6 +19,6 @@ include ../../../node_modules/bempug/index
         +e('icon', {t: 'img'})(src="/symbols/share.svg")
   +e('comments')
     +e('title', {}) Комментарии
-    +e('content', {})(:style="{ maxHeight: contentHeight + 'px' }")
+    +e('content', {})()
       user-comment(v-for="comment in post.comments" :key="comment.id" :comment="comment")
-    +e('input-wrapper', {})
+    +e('input-wrapper', {}) Введите комментарий...

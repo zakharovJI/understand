@@ -17,7 +17,7 @@ export default {
   computed: {
   },
   mounted() {
-    this.contentHeight = this.$refs.content.offsetHeight
+    // this.contentHeight = this.$refs.content.offsetHeight
   },
   methods: {
   }

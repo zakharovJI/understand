@@ -2,6 +2,9 @@
   $self: &;
 
   display: flex;
+  &:not(:first-child) {
+    padding-top: 15px;
+  }
 
   &__post-inner {
     width: 670px;
@@ -14,10 +17,10 @@
       display: flex;
       align-items: center;
       border-bottom: 1px solid $border-color;
-      height: 40px;
+      height: 50px;
 
       & #{$self}__name {
-        font-size: 13px;
+        font-size: 14px;
         line-height: 16px;
         font-family: "San Francisco Bold", sans-serif;
         margin-bottom: 5px;
@@ -25,8 +28,8 @@
       }
 
       & #{$self}__image {
-        width: 25px;
-        height: 25px;
+        min-width: 30px;
+        height: 30px;
         border-radius: 50%;
       }
     }
@@ -34,17 +37,17 @@
 
     & #{$self}__content {
       display: flex;
-      padding: 10px 20px 16px;
+      padding: 20px 20px 20px;
       flex-direction: column;
 
       & #{$self}__title {
-        font-size: 13px;
+        font-size: 18px;
         line-height: 16px;
         font-family: "San Francisco Bold", sans-serif;
       }
 
       & #{$self}__text {
-        font-size: 13px;
+        font-size: 16px;
         line-height: 16px;
         color: $secondary-font-color;
         padding-top: 10px;
@@ -57,23 +60,26 @@
       display: flex;
       padding: 12px 20px;
       height: 40px;
+      display: flex;
+      align-items: center;
 
       & #{$self}__item {
         display: flex;
+        cursor: pointer;
 
         &:not(:last-child) {
-          margin-right: 20px;
+          margin-right: 30px;
         }
 
         & #{$self}__count {
           font-family: "San Francisco Bold", sans-serif;
-          font-size: 10px;
+          font-size: 12px;
           line-height: 12px;
           letter-spacing: 0.1em;
         }
 
         & #{$self}__text {
-          font-size: 8px;
+          font-size: 12px;
           line-height: 10px;
         }
 
@@ -95,11 +101,13 @@
     flex-direction: column;
 
     & #{$self}__title {
-      font-size: 14px;
+      font-size: 16px;
       line-height: 17px;
       padding: 12px 14px;
       border-bottom: 1px solid $border-color;
-      height: 40px;
+      height: 50px;
+      display: flex;
+      align-items: center;
     }
 
     & #{$self}__content {
@@ -107,11 +115,20 @@
       flex-direction: column;
       flex: 1;
       overflow: auto;
+      font-size: 16px;
+      padding-top: 10px;
+
     }
 
     & #{$self}__input-wrapper {
       background-color: $background-color;
+      display: flex;
+      align-items: center;
       height: 40px;
+      font-size: 12px;
+      line-height: 12px;
+      color: $gray;
+      padding-left: 10px;
     }
   }
 }
