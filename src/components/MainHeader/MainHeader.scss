@@ -19,6 +19,10 @@
     align-items: center;
   }
 
+  & #{$self}__logo {
+    width: 90px;
+    height: 30px;
+  }
 
   & #{$self}__item {
     cursor: pointer;

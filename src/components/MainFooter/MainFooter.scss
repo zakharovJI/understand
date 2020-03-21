@@ -1,0 +1,23 @@
+.main-footer {
+  $self: &;
+
+  padding: 72px;
+  background-color: $secondary-background-color;
+  width: 100%;
+  margin-top: auto;
+
+  &__text {
+    font-family: "San Francisco Regular", sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    color: white;
+
+    & > a {
+      text-decoration: underline;
+      color: inherit;
+    }
+  }
+}

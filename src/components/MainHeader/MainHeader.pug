@@ -3,18 +3,18 @@ include ../../../node_modules/bempug/index
 
 +b('main-header', {t: 'header'})
   +e('content')
-    +e('logo', {t: 'img'})(src="/symbols/logo.svg")
-      //use(xlink:href="#logo")
+    +e('logo', {t: 'svg'})
+      use(xlink:href="#logo")
     +e('menu-list', {t: 'menu'})
       +e('item') Горячее
       +e('item') Свежее
       +e('item') Лучшее
     +e('actions')
-      +e('item')
-        +e('icon', {t: 'img'})(src="/symbols/write.svg")
-          //use(xlink:href="#write")
+      +e('item')(@click="createPostStateToggle")
+        +e('icon', {t: 'svg'})
+          use(xlink:href="#write")
         +e('text') Написать пост
-      +e('item')
-        +e('text') Войти
-        +e('icon', {t: 'img'})(src="/symbols/share.svg")
-          //use(xlink:href="#login")
+      +e('item')(@click="loginButtonClicked")
+        +e('text') {{isAuthenticated ? 'Выйти' : 'Войти'}}
+        +e('icon', {t: 'svg'})
+          use(xlink:href="#login")

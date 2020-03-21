@@ -7,7 +7,7 @@
   }
 
   &__post-inner {
-    width: 670px;
+    @include size(8);
     border: 1px solid $border-color;
     border-radius: 2px;
     background-color: white;
@@ -66,9 +66,11 @@
       & #{$self}__item {
         display: flex;
         cursor: pointer;
+        align-items: center;
 
         &:not(:last-child) {
           margin-right: 30px;
+          width: 70px;
         }
 
         & #{$self}__count {
@@ -79,21 +81,32 @@
         }
 
         & #{$self}__text {
-          font-size: 12px;
-          line-height: 10px;
+          font-size: 14px;
+          line-height: 14px;
         }
 
         & #{$self}__icon {
-          width: 12px;
-          height: 12px;
+          width: 14px;
+          height: 14px;
           margin-left: 10px;
+          color: inherit;
+        }
+
+        &_clicked {
+          color: $primary-blue;
+
+          & #{$self}__icon {
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+          }
         }
       }
     }
   }
 
   &__comments {
-    width: 210px;
+    @include size(4);
     margin-left: 15px;
     border: 1px solid $border-color;
     background-color: white;
@@ -128,7 +141,6 @@
       font-size: 12px;
       line-height: 12px;
       color: $gray;
-      padding-left: 10px;
     }
   }
 }
