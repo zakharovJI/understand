@@ -2,6 +2,7 @@
 namespace Makson;
 include_once $_SERVER['DOCUMENT_ROOT'].'/workzone/blog/func/functions.php';
 
+
 $errorStatus = false;
 if (isset($_POST['n'])) {
     $nameMobile = $_POST['n'];
@@ -11,7 +12,7 @@ if (isset($_POST['n'])) {
 
 if (!$errorStatus && $nameMobile == 'Lenya') {
     $postObject = new \Post();
-    $allInfoArray = $postObject->update_post($_POST);
+    $allInfoArray = $postObject->remove_post_like($_POST);
 
     if (!$allInfoArray) {
         http_response_code(400);

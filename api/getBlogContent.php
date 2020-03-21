@@ -11,18 +11,15 @@ if (isset($_GET['n'])) {
 
 if (!$errorStatus && $nameMobile == 'Lenya') {
     $postObject = new \Post();
-    $result = $postObject->get_all_info();
-    $allInfoArray = [
-        'content' => $result,
-    ];
+    $allInfoArray = $postObject->get_all_info();
 
-    echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
+    if (!$allInfoArray) {
+        http_response_code(400);
+    } else {
+        echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
+    }
 } else {
-    $allInfoArray = [
-        'content' => 'Ухади',
-    ];
-
-    echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
+    http_response_code(400);
 }
 
 

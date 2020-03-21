@@ -10,34 +10,53 @@ class Post extends DB
 
     // Все данные о блоге из базы
     function get_all_info() {
-        $result = $this->db->prepare("SELECT pos.id, pos.title, pos.description, pos.text, pos.img, pos.date, 
-                                                       cat.name AS category_name, auth.name AS author_name 
-                                                FROM posts pos, categories cat, authors auth 
-                                                WHERE pos.id_category = cat.id AND pos.id_author = auth.id 
-                                                ORDER BY pos.id ASC");
-
+        $result = $this->db->prepare(
+            "SELECT post.id, post.title, post.description, post.text, post.img, post.date, post.likes,
+                           author.full_name AS author_name, author.username AS author_username,
+                           author.email AS author_email 
+                      FROM posts post, usertbl author 
+                      WHERE post.id_author = author.id 
+                      ORDER BY post.id ASC"
+        );
         $result->execute();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
         $allInfo = $result->fetchAll();
 
-        return $allInfo;
+        $result = $this->db->prepare("SELECT * FROM comments");
+        $result->execute();
+        $result->setFetchMode(\PDO::FETCH_ASSOC);
+        $commentsList = $result->fetchAll();
+        $result = null;
+
+        foreach ($allInfo as $key => $postItem) {
+            $commsList = [];
+            foreach ($commentsList as $commItem) {
+                if ($commItem['id_post'] == $postItem['id']) {
+                    array_push($commsList, $commItem['text']);
+                }
+            }
+            $postItem['commentaries'] = $commsList;
+            unset($postItem['img']);
+            unset($postItem['description']);
+            $allInfo[$key] = $postItem;
+        }
+
+        return [
+            'content' => $allInfo,
+        ];
     }
 
     // Добавить пост
     function add_post($data) {
         $title = $data['title'];
-        $description = $data['description'];
         $text = $data['text'];
         $id_category = $data['id_category'];
         $id_author = $data['id_author'];
         $date_create = date('d:m:Y H:i:s');
 
-        $result = $this->db->prepare("INSERT INTO posts (`title`,`description`,`text`,
-                                                                   `date`,`id_category`,`id_author`) 
-                                                VALUES (:title, :description, :text, :date_create, 
-                                                        :id_category, :id_author)");
+        $result = $this->db->prepare("INSERT INTO posts (`title`, `text`, `date`,`id_category`,`id_author`) 
+                                                VALUES (:title, :text, :date_create, :id_category, :id_author)");
         $result->bindParam(':title', $title);
-        $result->bindParam(':description', $description);
         $result->bindParam(':text', $text);
         $result->bindParam(':date_create', $date_create);
         $result->bindParam(':id_category', $id_category);
@@ -46,7 +65,10 @@ class Post extends DB
         $result = null;
 
         if ($status) {
-            return true;
+            return [
+                'result' => true,
+                'status' => 200,
+            ];
         } else {
             return false;
         }
@@ -71,17 +93,14 @@ class Post extends DB
     function update_post($data) {
         $id_post = $data['id_post'];
         $title = $data['title'];
-        $description = $data['description'];
         $text = $data['text'];
         $id_category = $data['id_category'];
         $id_author = $data['id_author'];
         $new_date = date('d:m:Y H:i:s');
 
-        $result = $this->db->prepare("UPDATE posts SET title = :title, description = :description, 
-                                                text = :text, `date` = :new_date, id_category = :id_category, 
-                                                id_author = :id_author WHERE id = :id_post");
+        $result = $this->db->prepare("UPDATE posts SET title = :title, text = :text, `date` = :new_date, 
+                                                id_category = :id_category, id_author = :id_author WHERE id = :id_post");
         $result->bindParam(':title', $title);
-        $result->bindParam(':description', $description);
         $result->bindParam(':text', $text);
         $result->bindParam(':new_date', $new_date);
         $result->bindParam(':id_category', $id_category);
@@ -90,25 +109,110 @@ class Post extends DB
         $status = $result->execute();
 
         if ($status) {
-            return true;
+            return [
+                'result' => true,
+                'status' => 200,
+            ];
         } else {
             return false;
         }
     }
 
     // Поставить лайк посту
-    function set_post_like($data) {
+    function set_post_like($data)
+    {
+        if (!$this->check_user_like($data)) {
+            $id_post = $data['id_post'];
+            $id_user = $data['id_user'];
+
+            $result = $this->db->prepare("INSERT INTO likes (`id_user`, `id_post`) 
+                                                    VALUES (:id_user, :id_post)");
+            $result->bindParam(':id_post', $id_post);
+            $result->bindParam(':id_user', $id_user);
+            $status = $result->execute();
+
+            if ($status) {
+                $result = $this->set_post_likes($id_post);
+                if (!$result) {
+                    return false;
+                } else {
+                    return $result;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Убрать лайк с поста
+    function remove_post_like($data) {
         $id_post = $data['id_post'];
+        $id_user = $data['id_user'];
+        if ($this->check_user_like($data)) {
+            $result = $this->db->prepare("DELETE FROM likes WHERE id_post = :id_post AND id_user = :id_user");
+            $result->bindParam(':id_post', $id_post);
+            $result->bindParam(':id_user', $id_user);
+            $status = $result->execute();
 
-        $result = $this->db->prepare("UPDATE posts SET likes = likes + 1 WHERE id = :id_post");
+            if ($status) {
+                $result = $this->set_post_likes($id_post);
+                if (!$result) {
+                    return false;
+                } else {
+                    return $result;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Ставил ли юзер лайк
+    function check_user_like($data) {
+        $id_post = $data['id_post'];
+        $id_user = $data['id_user'];
+
+        $result = $this->db->prepare("SELECT * FROM likes WHERE id_post = :id_post AND id_user = :id_user");
         $result->bindParam(':id_post', $id_post);
-        $status = $result->execute();
+        $result->bindParam(':id_user', $id_user);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
 
-        if ($status) {
+        if (count($result->fetchAll()) > 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+    // Взять все лайки указанного поста
+    function get_post_likes($id_post) {
+        $result = $this->db->prepare("SELECT * FROM likes WHERE id_post = :id_post");
+        $result->bindParam(':id_post', $id_post);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $list = $result->fetchAll();
+        $result = null;
+
+        return $list;
+    }
+
+    function set_post_likes($id_post)
+    {
+        $likes_count = count($this->get_post_likes($id_post));
+        $result = $this->db->prepare("UPDATE posts SET likes = :likes WHERE id = :id_post");
+        $result->bindParam(':likes', $likes_count);
+        $result->bindParam(':id_post', $id_post);
+        $status = $result->execute();
+
+        if ($status) {
+            return [
+                'result' => $status,
+                'likes_count' => $likes_count,
+            ];
+        }
+
+        return false;
     }
 
     // Добавить коммент под пост
@@ -128,7 +232,10 @@ class Post extends DB
         $status = $result->execute();
 
         if ($status) {
-            return true;
+            return [
+                'result' => true,
+                'status' => 200,
+            ];
         } else {
             return false;
         }
@@ -144,7 +251,9 @@ class Post extends DB
         $result->setFetchMode(\PDO::FETCH_ASSOC);
         $list = $result->fetchAll();
 
-        echo json_encode($list, JSON_UNESCAPED_UNICODE);
+        return [
+            'result' => $list,
+        ];
     }
 
     function get_start_posts()

@@ -11,17 +11,13 @@ if (isset($_GET['n'])) {
 
 if (!$errorStatus && $nameMobile == 'Lenya') {
     $postObject = new \Post();
-    $result = $postObject->get_post_comments($_GET);
+    $allInfoArray = $postObject->get_post_comments($_GET);
 
-    $allInfoArray = [
-        'result' => $result,
-    ];
-
-    echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
+    if (!$allInfoArray) {
+        http_response_code(400);
+    } else {
+        echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
+    }
 } else {
-    $allInfoArray = [
-        'content' => 'Ухади',
-    ];
-
-    echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
+    http_response_code(400);
 }
