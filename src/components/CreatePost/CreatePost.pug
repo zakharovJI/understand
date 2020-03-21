@@ -1,0 +1,30 @@
+include ../../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('create-post')
+  +e('wrapper', {t: "form"})(@submit.prevent="createAndSubmitPost")
+    +e('input-wrapper', {})
+      +e('title', {}) Заголовок
+      brand-input(
+        placeholder="Введите заголовок"
+        :required="true"
+        ref="titleInput"
+        :themeLight="true"
+        :themeLarge="true"
+      )
+    +e('input-wrapper', {})
+      +e('title', {}) Пища для размышлений
+      brand-input(
+        placeholder="Введите текст"
+        :required="true"
+        ref="contentInput"
+        mod="textarea"
+        :themeLight="true"
+        :themeLarge="true"
+      )
+    brand-button(
+      label="Создать пост"
+      ref="postCreateButton"
+      type="submit"
+      @click.prevent="createAndSubmitPost"
+    )

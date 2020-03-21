@@ -3,9 +3,15 @@ $light: #F5F5F5;
 $light-gray: #E5E5E5;
 $gray: #969696;
 $dark-gray: #737373;
+$red: #ff0000;
+$brown: #333333;
+$light-blue: rgba(181, 215, 255, 0.65);
 
 $primary-blue: $blue;
+$secondary-blue: $light-blue;
 $primary-font-color: black;
 $secondary-font-color: $dark-gray;
 $border-color: $light-gray;
 $background-color: $light;
+$error-color: $red;
+$secondary-background-color: $brown;

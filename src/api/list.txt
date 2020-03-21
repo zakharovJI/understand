@@ -1,0 +1,41 @@
+на добавление обращаешься к /api/addBlogPost.php PUT и передаешь данные примерно так:
+$data['n' = Lenya, 'title' = ..., 'text' = ..., 'id_category' = ..., 'id_author' = ...]
+
+
+на удаление обращаешься к /api/deleteBlogPost.php DELETE и передаешь:
+$data['n' = 'Lenya', 'id_post' = ...]
+
+
+на изменение обращаешься к /api/updateBlogPost.php POST и передаешь данные примерно так:
+$data['n' = Lenya, 'id_post' = ..., 'title' = ..., 'text' = ..., 'id_category' = ..., 'id_author' = ...]
+
+
+на получение данных о постах обращаешься к /api/getBlogContent.php GET и передаешь данные примерно так:
+$data['n' = Lenya]
+
+
+чтобы поставить лайк обращаешься к /api/likesPost.php POST и передаешь данные примерно так:
+$data['n' = Lenya, 'id_post' = ...]
+
+
+чтобы добавить коммент обращаешься к /api/addPostComment.php PUT и передаешь данные примерно так:
+$data['n' = Lenya, 'id_post' = ..., 'text' = ..., 'id_author' = ...]
+
+
+чтобы достать комменты поста обращаешься к /api/getPostComments.php GET и передаешь данные примерно так:
+$data['n' = Lenya, 'id_post' = ...]
+
+
+чтобы авторизоваться обращаешься к /api/checkAuthorize.php POST'ом и передаешь данные примерно так:
+$data['n' = Lenya, 'login' = ..., 'password' = ...]
+
+Пароль должен быть закодирован в base_64.
+Логин может быть как никнейм, так и почта
+
+чтобы зарегаться обращаешься к /api/newAccount.php POST'ом и передаешь данные примерно так:
+$data['n' = Lenya, 'email' = ..., 'fullname' = ..., 'username' = ..., 'password' = ...]
+
+Пароль закодированный передаешь, fullname = Захаров Леонид Сосискович (:(:(:(:, username = login
+
+
+/api/getUser.php?n=Lenya&user_id=3

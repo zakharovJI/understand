@@ -1,10 +1,11 @@
 include ../../node_modules/bempug/index
 - BEMPUG.modifier = '_';
 
-+b('app')(id='main')()
-  +b('header', {t: 'main-header', e: '&'})
-  +e('content')
-    +e('view', {t: 'div'})
-      post(v-for="post in postList" :key="post.id" :post="post")
-    +e('aside', {t: 'aside'})
++b('app')(id='main' :class="{'app_theme-light' : $route.path.indexOf('authorization') !== -1}")()
+  +b('header', {t: 'main-header', e: '&'})(v-if="$route.path.indexOf('authorization') === -1")
+  create-post(:class="{'create-post_active' : postCreateStateActive}")
+  +e('content', {})
+    +e('view', {t: 'router-view'})
+    +e('aside', {t: 'aside'})(v-if="$route.path.indexOf('authorization') === -1")
       news-aside(:newsList="newsList")
+  main-footer()
