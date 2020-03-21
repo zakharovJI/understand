@@ -21,4 +21,28 @@
     line-height: 17px;
     padding: 7px 33px;
   }
+
+  &_disabled {
+    background-color: $secondary-blue;
+    cursor: default;
+
+    &:hover, &:active, &:focus {
+      background-color: $secondary-blue;
+    }
+  }
+
+  &_secondary {
+    background-color: transparent;
+    border: 1px solid $primary-blue;
+
+    & #{$self}__label {
+      color: $primary-blue;
+    }
+
+    &:hover, &:active, &:focus {
+      & #{$self}__label {
+        color: white;
+      }
+    }
+  }
 }

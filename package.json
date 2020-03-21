@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "@babel/parser": "<7.4.0",
     "axios": "^0.18.0",
     "babel-node": "0.0.1-security",
     "import-glob-loader": "^1.1.0",

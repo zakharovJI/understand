@@ -1,0 +1,8 @@
+include ../../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('brand-checkbox', {t: 'div'})(:class="{'brand-checkbox_invalid' : stateInvalid, 'brand-checkbox_theme-light' : themeLight}")
+	+e('control', {t: 'label'})(ref="control")
+		input(type="checkbox" hidden ref="input" @click="onClick" )&attributes(attributes)
+		+e('view')(ref="view")
+		+e('text')(v-if="label") {{label}}

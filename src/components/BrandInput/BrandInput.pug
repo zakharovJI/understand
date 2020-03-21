@@ -1,0 +1,36 @@
+include ../../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('brand-input')(:class="{'brand-input_focused': stateFocused, " +
+"'brand-input_invalid': stateInvalid, " +
+"'brand-input_filled': stateFilled, " +
+"'brand-input_theme-large': themeLarge, " +
+"'brand-input_theme-light': themeLight}")
+	+e('control', {t: 'label'})
+		slot(name="append")
+		+e('error')(v-if="error") {{ errors() }}
+		+e('field', {t: 'input'})(
+			@focus="onFocus"
+			@blur="onBlur"
+			@input="onInput"
+			@click="onClick"
+			v-model="selfValue"
+			:type="selfType"
+			autocomplete="off"
+			ref="inputField"
+			:placeholder="placeholder"
+			v-if="mod !== 'textarea'"
+		)
+		+e('field', {t: 'textarea'})(
+			@focus="onFocus"
+			@blur="onBlur"
+			@input="onInput"
+			@click="onClick"
+			v-model="selfValue"
+			:type="selfType"
+			autocomplete="off"
+			ref="inputField"
+			:placeholder="placeholder"
+			v-else=""
+		)
+		slot(name="reset")

@@ -1,0 +1,86 @@
+.brand-checkbox {
+  $self: &;
+  
+  display: inline-block;
+  color: lightgray;
+  
+  &__control {
+    display: flex;
+    cursor: pointer;
+  
+    input {
+      &:checked + #{$self}__view {
+        &:after {
+          border-color: $primary-blue;
+        }
+      }
+    }
+    
+    #{$self}__view {
+      position: relative;
+      display: inline-block;
+      min-width: 16px;
+      flex-basis: 16px;
+      height: 16px;
+      margin-bottom: auto;
+      cursor: pointer;
+  
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        transition: all .1s linear;
+        width: 9px;
+        height: 13px;
+        border-bottom-right-radius: 3px;
+        border-bottom: 2px solid $secondary-font-color;
+        border-right: 2px solid $secondary-font-color;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+    
+    #{$self}__text {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+      margin-left: 12px;
+      margin-top: 3px;
+      cursor: pointer;
+  
+    }
+  }
+  
+  &_part {
+    #{$self}__control {
+      input:not(:checked) + #{$self}__view {
+        background-color: green;
+        border-color: green;
+        &:before {
+          position: absolute;
+          left: 4px;
+          top: 50%;
+          transform: translateY(-50%);
+          content: '';
+          display: block;
+          height: 2px;
+          width: 16px;
+          background-color: white;
+        }
+      }
+    }
+  }
+  
+  &_invalid {
+    #{$self}__view {
+      border-color: orange;
+    }
+  }
+  
+  &_theme-light {
+    #{$self}__text {
+      color: $gray;
+    }
+  }
+}

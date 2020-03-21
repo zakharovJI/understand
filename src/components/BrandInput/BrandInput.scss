@@ -1,0 +1,159 @@
+.brand-input {
+  $self: &;
+  background-color: transparent;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  color: $primary-font-color;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: text;
+  width: 100%;
+  
+  #{$self}__control {
+    height: 100%;
+    cursor: text;
+  }
+  
+  #{$self}__label {
+    position: absolute;
+    line-height: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 20px;
+    transition: all .25s linear;
+    transform-origin: left;
+    color: inherit;
+    cursor: inherit;
+  }
+  
+  #{$self}__error {
+    display: none;
+    position: absolute;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: 16px;
+    top: 50%;
+    padding-left: 20px;
+    transition: all .25s linear;
+    transform-origin: left;
+    color: $error-color;
+    transform: translateY(-140%);
+  }
+  
+  #{$self}__field {
+    width: 100%;
+    height: 100%;
+    min-height: 40px;
+    font-weight: inherit;
+    font-size: inherit;
+    padding-left: 20px;
+    background-color: inherit;
+    color: inherit;
+    cursor: inherit;
+    border: none;
+
+  }
+
+  textarea.brand-input__field {
+    max-height: 120px;
+    padding-top: 14px;
+
+  }
+  
+  #{$self}__reset {
+    position: absolute;
+    cursor: pointer;
+    color: $light-gray;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 25px;
+    font-size: 14px;
+  }
+  
+  #{$self}__search {
+    position: absolute;
+    color: $light-gray;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
+    width: 24px;
+    height: 24px;
+    cursor: inherit;
+  
+  
+  }
+  
+  &_focused, &_filled {
+    
+    #{$self}__control {
+      cursor: text;
+    }
+    
+    #{$self}__label {
+      font-size: 12px;
+      transform: translateY(-140%);
+    }
+  }
+  
+  &_invalid {
+    #{$self}__error {
+      display: block;
+    }
+    
+    #{$self}__label {
+      display: none;
+    }
+  }
+  
+  &_search {
+    color: $light-gray;
+    border: 1px solid $light;
+    background-color: #f8f8f8;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all .25s linear;
+    
+    #{$self}__field {
+      padding-left: 50px;
+      min-height: 38px;
+      font-weight: inherit;
+      padding-top: 0;
+    }
+    
+    #{$self}__label {
+      padding-left: 50px;
+      font-weight: inherit;
+    }
+    
+    #{$self}__error {
+      padding-left: 50px;
+    }
+    
+    &.brand-input_focused {
+      background-color: white;
+      #{$self}__label {
+        display: none;
+      }
+    }
+  }
+
+  &_theme-light {
+    //background-color: white;
+
+    border: 1px solid $border-color;
+    transition: background-color .25s linear;
+
+    &.brand-input_focused {
+      background-color: white;
+    }
+  }
+
+  &_theme-large {
+    min-height: 50px;
+
+    & #{$self}__field {
+      min-height: 50px;
+    }
+  }
+}

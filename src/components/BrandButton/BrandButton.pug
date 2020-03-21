@@ -1,5 +1,10 @@
 include ../../../node_modules/bempug/index
 - BEMPUG.modifier = '_';
 
-+b('brand-button')
-  +e('label', {}) {{label}}
++b('brand-button')(
+  @click="onClick"
+  :type="selfType"
+  :class="{'brand-button_disabled' : stateDisabled, 'brand-button_secondary' : secondary}")
+  slot(name="prepend" class="brand-button_prepend")
+  +e('label', {})() {{label}}
+  slot(name="append" class="brand-button_append")
