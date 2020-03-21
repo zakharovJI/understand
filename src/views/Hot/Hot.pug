@@ -1,0 +1,6 @@
+include ../../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('hot')
+  +e('content')
+    post(v-for="post in postList" :key="post.id" :post="post")

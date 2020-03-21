@@ -1,0 +1,76 @@
+include ../../../node_modules/bempug/index
+- BEMPUG.modifier = '_';
+
++b('authorization')
+  +e('content', {})
+    +e('title', {}) Войти в систему понимания:
+    +e('login-wrapper', {t: 'form'})(@submit.prevent="submitForm")
+      +e('error', {})(v-show="errorStateShow") {{errorMessage}}
+      +e('input-wrapper', {})
+        template(v-if="!registrationState")
+          brand-input(
+            placeholder="Введите логин или почту"
+            :required="true"
+            ref="loginInput"
+          )
+          brand-input(
+            placeholder="Введите пароль"
+            type="password"
+            :required="true"
+            validation="password"
+            ref="passwordInput"
+            @input=""
+          )
+          brand-checkbox(
+            value="0"
+            label="Запомнить меня"
+            :themeLight="true"
+            ref="rememberCheckbox")
+        template(v-else)
+          brand-input(
+            placeholder="Введите логин"
+            :required="true"
+            ref="loginInput"
+          )
+          brand-input(
+            placeholder="Введите почту"
+            :required="true"
+            mask="email"
+            validation="email"
+            ref="emailInput"
+            key="email"
+            type="email"
+          )
+          brand-input(
+            v-model="password"
+            placeholder="Введите пароль"
+            type="password"
+            :required="true"
+            validation="password"
+            ref="passwordInput"
+            @input=""
+            @copy.prevent=""
+          )
+          brand-input(
+            placeholder="Подтвердите пароль"
+            type="password"
+            :required="true"
+            validation="confirmPassword"
+            ref="confirmPasswordInput"
+            @input=""
+            @paste.prevent=""
+            :passToConfirm="$refs.passwordInput ? $refs.passwordInput.selfValue : ''"
+          )
+      brand-button(
+        :label="registrationState ? 'Зарегистрироваться' : 'Войти'"
+        ref="submitButton"
+        :validatable="true"
+        @click="submitForm"
+      )
+      brand-button(
+        :label="!registrationState ? 'Зарегистрироваться' : 'Войти'"
+        ref="registrationButton"
+        :secondary="true"
+        @click="registration"
+        type="submit"
+      )
