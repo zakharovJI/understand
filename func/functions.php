@@ -23,6 +23,130 @@ class Post extends DB
         return $allInfo;
     }
 
+    // Добавить пост
+    function add_post($data) {
+        $title = $data['title'];
+        $description = $data['description'];
+        $text = $data['text'];
+        $id_category = $data['id_category'];
+        $id_author = $data['id_author'];
+        $date_create = date('d:m:Y H:i:s');
+
+        $result = $this->db->prepare("INSERT INTO posts (`title`,`description`,`text`,
+                                                                   `date`,`id_category`,`id_author`) 
+                                                VALUES (:title, :description, :text, :date_create, 
+                                                        :id_category, :id_author)");
+        $result->bindParam(':title', $title);
+        $result->bindParam(':description', $description);
+        $result->bindParam(':text', $text);
+        $result->bindParam(':date_create', $date_create);
+        $result->bindParam(':id_category', $id_category);
+        $result->bindParam(':id_author', $id_author);
+        $status = $result->execute();
+        $result = null;
+
+        if ($status) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Удалить пост
+    function delete_post($data) {
+        $id_post = $data['id_post'];
+
+        $result = $this->db->prepare("DELETE FROM posts WHERE id = :id");
+        $result->bindParam(':id', $id_post);
+        $status = $result->execute();
+
+        if ($status) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Изменить пост
+    function update_post($data) {
+        $id_post = $data['id_post'];
+        $title = $data['title'];
+        $description = $data['description'];
+        $text = $data['text'];
+        $id_category = $data['id_category'];
+        $id_author = $data['id_author'];
+        $new_date = date('d:m:Y H:i:s');
+
+        $result = $this->db->prepare("UPDATE posts SET title = :title, description = :description, 
+                                                text = :text, `date` = :new_date, id_category = :id_category, 
+                                                id_author = :id_author WHERE id = :id_post");
+        $result->bindParam(':title', $title);
+        $result->bindParam(':description', $description);
+        $result->bindParam(':text', $text);
+        $result->bindParam(':new_date', $new_date);
+        $result->bindParam(':id_category', $id_category);
+        $result->bindParam(':id_author', $id_author);
+        $result->bindParam(':id_post', $id_post);
+        $status = $result->execute();
+
+        if ($status) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Поставить лайк посту
+    function set_post_like($data) {
+        $id_post = $data['id_post'];
+
+        $result = $this->db->prepare("UPDATE posts SET likes = likes + 1 WHERE id = :id_post");
+        $result->bindParam(':id_post', $id_post);
+        $status = $result->execute();
+
+        if ($status) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Добавить коммент под пост
+    function add_post_comment($data) {
+        $id_post = $data['id_post'];
+        $text = $data['text'];
+        $id_author = $data['id_author'];
+        $date_create = date('d:m:Y H:i:s');
+
+        $result = $this->db->prepare("INSERT INTO comments (id_post, text, id_author, date_create) 
+                                                VALUES id_post = :id_post, text = :text, 
+                                                       id_author = :id_author, date_create = :date_create");
+        $result->bindParam(':id_post', $id_post);
+        $result->bindParam(':text', $text);
+        $result->bindParam(':id_author', $id_author);
+        $result->bindParam(':date_create', $date_create);
+        $status = $result->execute();
+
+        if ($status) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Достать комменты поста
+    function get_post_comments($data) {
+        $id_post = $data['id_post'];
+
+        $result = $this->db->prepare("SELECT * FROM comments WHERE id_post = :id_post ORDER BY ASC");
+        $result->bindParam(':id_post', $id_post);
+        $result->execute();
+        $result->setFetchMode(\PDO::FETCH_ASSOC);
+        $list = $result->fetchAll();
+
+        echo json_encode($list, JSON_UNESCAPED_UNICODE);
+    }
+
     function get_start_posts()
     {
         $result = $this->db->prepare("SELECT * FROM posts ORDER BY id ASC LIMIT 6");
