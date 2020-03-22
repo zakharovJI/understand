@@ -30,13 +30,13 @@ if (!$errorStatus && $nameMobile == 'Lenya') {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     foreach ($usersList as $user) {
-        if ($user['email'] == $email) {
+        if (strtolower($user['email']) == strtolower($email)) {
             $errors_array['email'] = 1;
             break;
         }
     }
     foreach ($usersList as $user) {
-        if ($user['username'] == $username) {
+        if (strtolower($user['username']) == strtolower($username)) {
             $errors_array['username'] = 1;
             break;
         }
@@ -53,7 +53,12 @@ if (!$errorStatus && $nameMobile == 'Lenya') {
 
         echo json_encode(['result' => true, 'status' => 200], JSON_UNESCAPED_UNICODE);
     } else {
-        echo json_encode($errors_array);
+        http_response_code(400);
+        if ($errors_array['email'] == 1) {
+            echo "Пользователь с такой почтой уже зарегистрирован";
+        } elseif ($errors_array['username'] == 1) {
+            echo "Пользователь с таким никнеймом уже зарегистрирован";
+        }
     }
 } else {
     http_response_code(400);

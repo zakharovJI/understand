@@ -9,18 +9,24 @@ class Post extends DB
     private $category, $author;
 
     // Все данные о блоге из базы
-    function get_all_info() {
+    function get_all_info($data) {
         $result = $this->db->prepare(
             "SELECT post.id, post.title, post.description, post.text, post.img, post.date, post.likes,
-                           author.full_name AS author_name, author.username AS author_username,
+                           author.id AS author_id, author.full_name AS author_name, author.username AS author_username,
                            author.email AS author_email 
                       FROM posts post, usertbl author 
                       WHERE post.id_author = author.id 
-                      ORDER BY post.id ASC"
+                      ORDER BY post.date DESC"
         );
         $result->execute();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
         $allInfo = $result->fetchAll();
+
+        foreach ($allInfo as $key => $postItem) {
+            $data['id_post'] = $postItem['id'];
+            $postItem['is_liked'] = $this->check_user_like($data);
+            $allInfo[$key] = $postItem;
+        }
 
         $result = $this->db->prepare("SELECT * FROM comments");
         $result->execute();
@@ -32,11 +38,17 @@ class Post extends DB
             $commsList = [];
             foreach ($commentsList as $commItem) {
                 if ($commItem['id_post'] == $postItem['id']) {
-                    array_push($commsList, $commItem['text']);
+                    $current_user = $this->get_user($commItem['id_author'])['user'];
+                    $commsObject = [
+                        'comm_fullname' => $current_user['full_name'],
+                        'comm_pers_img' => $current_user['pers_img'],
+                        'text' => $commItem['text'],
+                        'id_post' => $commItem['id_post'],
+                    ];
+                    array_push($commsList, $commsObject);
                 }
             }
             $postItem['commentaries'] = $commsList;
-            unset($postItem['img']);
             unset($postItem['description']);
             $allInfo[$key] = $postItem;
         }
@@ -46,13 +58,41 @@ class Post extends DB
         ];
     }
 
+    function get_user($id_user) {
+        $result = $this->db->prepare("SELECT * FROM `usertbl` ORDER BY id ASC");
+        $result->execute();
+        $result->setFetchMode(\PDO::FETCH_ASSOC);
+        $usersList = $result->fetchAll();
+        $result = null;
+
+        $current_user = [];
+        foreach ($usersList as $user) {
+            if ($user['id'] == $id_user) {
+                $current_user = $user;
+                unset($current_user['password']);
+                break;
+            }
+        }
+
+        if (count($current_user) > 0) {
+            return [
+                'result' => true,
+                'status' => 200,
+                'user' => $current_user,
+            ];
+        }
+
+        return false;
+    }
+
     // Добавить пост
     function add_post($data) {
         $title = $data['title'];
         $text = $data['text'];
         $id_category = $data['id_category'];
         $id_author = $data['id_author'];
-        $date_create = date('d:m:Y H:i:s');
+        $date_create = date("Y-m-d H:i:s");
+        echo $date_create;
 
         $result = $this->db->prepare("INSERT INTO posts (`title`, `text`, `date`,`id_category`,`id_author`) 
                                                 VALUES (:title, :text, :date_create, :id_category, :id_author)");
@@ -96,7 +136,7 @@ class Post extends DB
         $text = $data['text'];
         $id_category = $data['id_category'];
         $id_author = $data['id_author'];
-        $new_date = date('d:m:Y H:i:s');
+        $new_date = date("Y-m-d H:i:s");
 
         $result = $this->db->prepare("UPDATE posts SET title = :title, text = :text, `date` = :new_date, 
                                                 id_category = :id_category, id_author = :id_author WHERE id = :id_post");
@@ -220,11 +260,10 @@ class Post extends DB
         $id_post = $data['id_post'];
         $text = $data['text'];
         $id_author = $data['id_author'];
-        $date_create = date('d:m:Y H:i:s');
+        $date_create = date("Y-m-d H:i:s");
 
-        $result = $this->db->prepare("INSERT INTO comments (id_post, text, id_author, date_create) 
-                                                VALUES id_post = :id_post, text = :text, 
-                                                       id_author = :id_author, date_create = :date_create");
+        $result = $this->db->prepare("INSERT INTO comments (`id_post`, `text`, `id_author`, `date_create`) 
+                                                VALUES (:id_post, :text, :id_author, :date_create)");
         $result->bindParam(':id_post', $id_post);
         $result->bindParam(':text', $text);
         $result->bindParam(':id_author', $id_author);

@@ -1,5 +1,6 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/workzone/blog/db/db.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/workzone/blog/func/functions.php';
 
 $errorStatus = false;
 if (isset($_GET['n'])) {
@@ -9,34 +10,13 @@ if (isset($_GET['n'])) {
 }
 
 if (!$errorStatus && $nameMobile == 'Lenya') {
-    $db = DB::getDb();
-    $result = $db->prepare("SELECT * FROM `usertbl` ORDER BY id ASC");
-    $result->execute();
-    $result->setFetchMode(\PDO::FETCH_ASSOC);
-    $usersList = $result->fetchAll();
-    $result = null;
+    $postObject = new \Post();
+    $allInfoArray = $postObject->get_user($_GET['id_user']);
 
-    $user_id = $_GET['user_id'];
-    $current_user = [];
-
-    foreach ($usersList as $user) {
-        if ($user['id'] == $user_id) {
-            $current_user = $user;
-            unset($current_user['password']);
-            break;
-        }
-    }
-
-    if (count($current_user) > 0) {
-        $allInfoArray = [
-            'result' => true,
-            'user' => $current_user,
-        ];
-
-        echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
-        die();
-    } else {
+    if (!$allInfoArray) {
         http_response_code(400);
+    } else {
+        echo json_encode($allInfoArray, JSON_UNESCAPED_UNICODE);
     }
 } else {
     http_response_code(400);

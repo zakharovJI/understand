@@ -11,7 +11,7 @@ if (isset($_GET['n'])) {
 
 if (!$errorStatus && $nameMobile == 'Lenya') {
     $postObject = new \Post();
-    $allInfoArray = $postObject->get_all_info();
+    $allInfoArray = $postObject->get_all_info($_GET);
 
     if (!$allInfoArray) {
         http_response_code(400);

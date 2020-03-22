@@ -24,7 +24,7 @@ if (!$errorStatus && $nameMobile == 'Lenya') {
     $current_user_id = null;
 
     foreach ($usersList as $user) {
-        if ($user['email'] == $login || $user['username'] == $login) {
+        if (strtolower($user['email']) == strtolower($login) || strtolower($user['username']) == strtolower($login)) {
             $hashed_password = $user['password'];
             $current_user_id = $user['id'];
             $is_login_exists = true;
