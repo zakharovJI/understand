@@ -72,6 +72,7 @@ const mutations = {
     state.postList = state.postList.filter(x => x.id !== id)
   },
   appendComment: (state, comment) => {
+    console.log(comment);
     state.postList.find(x => x.id === comment.postId).commentaries.push(comment)
   }
 };

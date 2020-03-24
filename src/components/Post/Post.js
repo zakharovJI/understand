@@ -72,32 +72,34 @@ export default {
         })
     },
     appendComment() {
-      const comment = this.$refs.commentInput.selfValue;
-      const authorId = this.$store.getters['auth/accessToken'];
-      const postId = this.post.id;
-      const userData = this.$store.getters['user/getUserData'];
+      if (this.$refs.commentInput.selfValue) {
+        const comment = this.$refs.commentInput.selfValue;
+        const authorId = this.$store.getters['auth/accessToken'];
+        const postId = this.post.id;
+        const userData = this.$store.getters['user/getUserData'];
 
-      this.formData.append('n', 'Lenya');
-      this.formData.append('id_post', postId);
-      this.formData.append('id_author', authorId);
-      this.formData.append('text', comment);
+        this.formData.append('n', 'Lenya');
+        this.formData.append('id_post', postId);
+        this.formData.append('id_author', authorId);
+        this.formData.append('text', comment);
 
-      const comm = {
-        comm_fullname: userData.full_name,
-        comm_per_img: userData.pers_img,
-        text: comment,
-        postId: postId
-      };
+        const comm = {
+          comm_fullname: userData.full_name,
+          comm_pers_img: userData.pers_img,
+          text: comment,
+          postId: postId
+        };
 
-      this.$store.dispatch('posts/appendComment', {
-        dispatch: this.formData,
-        commit: comm
-      })
-        .then(() => {
-          console.log('COMMENT_ADDED');
-          this.formData = new FormData;
-          this.$refs.commentInput.selfValue = '';
+        this.$store.dispatch('posts/appendComment', {
+          dispatch: this.formData,
+          commit: comm
         })
+          .then(() => {
+            console.log('COMMENT_ADDED');
+            this.formData = new FormData;
+            this.$refs.commentInput.selfValue = '';
+          })
+      }
     }
   }
 }
