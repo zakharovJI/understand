@@ -23,7 +23,7 @@ export default {
         this.$store.commit('auth/logoutRequest');
         this.$router.go();
       } else {
-        this.$router.push('/authorization')
+        this.$router.push('/workzone/understand/authorization')
       }
     },
     createPostStateToggle() {

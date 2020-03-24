@@ -7,12 +7,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/workzone/understand/',
     name: 'Home',
     component: Hot
   },
   {
-    path: '/authorization',
+    path: '/workzone/understand/authorization/',
     component: Authorization
   }
 ];
