@@ -53,7 +53,7 @@ export default {
         this.$store.dispatch('auth/authUser', this.data)
           .then(() => {
             console.log('auth success');
-            this.$router.push('/');
+            this.$router.push('/workzone/understand/');
           })
           .catch(err => {
             console.log('error');
