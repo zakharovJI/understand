@@ -2,6 +2,8 @@
   $self: &;
 
   display: flex;
+  min-height: 300px;
+
   &:not(:first-child) {
     padding-top: 15px;
   }
@@ -11,6 +13,8 @@
     border: 1px solid $border-color;
     border-radius: 2px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
 
     & #{$self}__user {
       padding: 7px 21px;
@@ -28,10 +32,19 @@
       }
 
       & #{$self}__image {
-        min-width: 30px;
+        width: 30px;
         height: 30px;
         border-radius: 50%;
       }
+    }
+
+    & #{$self}__delete {
+      margin-left: auto;
+      width: 22px;
+      height: 22px;
+      color: $border-color;
+      cursor: pointer;
+      padding: 5px;
     }
 
 
@@ -39,6 +52,7 @@
       display: flex;
       padding: 20px 20px 20px;
       flex-direction: column;
+      flex: 1;
 
       & #{$self}__title {
         font-size: 18px;
@@ -52,6 +66,7 @@
         color: $secondary-font-color;
         padding-top: 10px;
         padding-right: 100px;
+        white-space: normal;
       }
     }
 
@@ -112,6 +127,8 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+    max-height: 300px;
+    flex: 1;
 
     & #{$self}__title {
       font-size: 16px;

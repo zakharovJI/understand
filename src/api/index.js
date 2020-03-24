@@ -37,7 +37,7 @@ export default {
 
   createPost(data) {
     return http({
-      method: 'PUT',
+      method: 'POST',
       url: '/addBlogPost.php',
       data,
       credentials: true,
@@ -48,7 +48,7 @@ export default {
 
   deletePost(data) {
     return http({
-      method: 'DELETE',
+      method: 'POST',
       url: '/deleteBlogPost.php',
       data,
       credentials: true,
@@ -79,9 +79,20 @@ export default {
       .catch(error => Promise.reject(error));
   },
 
-  sendComment(data) {
+  dislikePost(data) {
     return http({
-      method: 'PUT',
+      method: 'POST',
+      url: '/removeLike.php',
+      data,
+      credentials: true,
+    })
+      .then(result => Promise.resolve(result))
+      .catch(error => Promise.reject(error));
+  },
+
+  appendComment(data) {
+    return http({
+      method: 'POST',
       url: '/addPostComment.php',
       data,
       credentials: true,
@@ -90,12 +101,10 @@ export default {
       .catch(error => Promise.reject(error));
   },
 
-  getPostList(data) {
+  getPostList(params) {
     return http({
       methods: 'GET',
-      params: {
-        n: 'Lenya'
-      },
+      params,
       url: '/getBlogContent.php',
       credentials: true,
     })
@@ -108,6 +117,17 @@ export default {
       methods: 'GET',
       data,
       url: '/getPostComments.php',
+      credentials: true,
+    })
+      .then(result => Promise.resolve(result.data))
+      .catch(error => Promise.reject(error));
+  },
+
+  getUser(params) {
+    return http({
+      methods: 'GET',
+      params,
+      url: '/getUser.php',
       credentials: true,
     })
       .then(result => Promise.resolve(result.data))

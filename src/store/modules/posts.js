@@ -26,8 +26,8 @@ const actions = {
   async deletePost({dispatch, commit}, post) {
     const result = await api.deletePost(post)
       .then(resp => {
-        console.log(resp);
-
+        console.log(post.get('id_post'));
+        commit('deletePost', post.get('id_post'))
       })
   },
 
@@ -36,13 +36,43 @@ const actions = {
       .then(resp => {
         console.log('success added', resp);
       })
-  }
- };
+  },
+
+
+  async likePost({dispatch, commit}, data) {
+    const result = await api.likePost(data)
+      .then(resp => {
+        console.log('success liked', resp);
+      })
+  },
+
+  async dislikePost({dispatch, commit}, data) {
+    const result = await api.dislikePost(data)
+      .then(resp => {
+        console.log('success disliked', resp);
+      })
+  },
+
+  async appendComment({dispatch, commit}, data) {
+    const result = await api.appendComment(data.dispatch)
+      .then(resp => {
+        commit('appendComment', data.commit)
+      })
+  },
+
+
+};
 
 const mutations = {
   setPostList: (state, postList) => {
     console.log('aadsdsadadas', postList);
     state.postList = postList;
+  },
+  deletePost: (state, id) => {
+    state.postList = state.postList.filter(x => x.id !== id)
+  },
+  appendComment: (state, comment) => {
+    state.postList.find(x => x.id === comment.postId).commentaries.push(comment)
   }
 };
 

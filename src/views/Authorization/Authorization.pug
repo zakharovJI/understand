@@ -3,10 +3,10 @@ include ../../../node_modules/bempug/index
 
 +b('authorization')
   +e('content', {})
-    +e('title', {}) Войти в систему понимания:
+    +e('title', {}) {{!registerSuccessState ? 'Войти в систему понимания:' : 'Вы успешно зарегистрированны!'}}
     +e('login-wrapper', {t: 'form'})(@submit.prevent="submitForm")
       +e('error', {})(v-show="errorStateShow") {{errorMessage}}
-      +e('input-wrapper', {})
+      +e('input-wrapper', {})(v-if="!registerSuccessState")
         template(v-if="!registrationState")
           brand-input(
             placeholder="Введите логин или почту"
@@ -20,6 +20,7 @@ include ../../../node_modules/bempug/index
             validation="password"
             ref="passwordInput"
             @input=""
+            key="password"
           )
           brand-checkbox(
             value="0"
@@ -28,9 +29,15 @@ include ../../../node_modules/bempug/index
             ref="rememberCheckbox")
         template(v-else)
           brand-input(
+            placeholder="Введите Ваше имя"
+            :required="true"
+            ref="nameInput"
+          )
+          brand-input(
             placeholder="Введите логин"
             :required="true"
             ref="loginInput"
+            key="login"
           )
           brand-input(
             placeholder="Введите почту"
@@ -50,6 +57,7 @@ include ../../../node_modules/bempug/index
             ref="passwordInput"
             @input=""
             @copy.prevent=""
+            key="password"
           )
           brand-input(
             placeholder="Подтвердите пароль"
@@ -62,7 +70,7 @@ include ../../../node_modules/bempug/index
             :passToConfirm="$refs.passwordInput ? $refs.passwordInput.selfValue : ''"
           )
       brand-button(
-        :label="registrationState ? 'Зарегистрироваться' : 'Войти'"
+        :label="registrationState && !registerSuccessState ? 'Зарегистрироваться' : 'Войти'"
         ref="submitButton"
         :validatable="true"
         @click="submitForm"
@@ -73,4 +81,5 @@ include ../../../node_modules/bempug/index
         :secondary="true"
         @click="registration"
         type="submit"
+        v-if="!registerSuccessState"
       )

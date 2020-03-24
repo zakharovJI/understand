@@ -31,6 +31,11 @@
     font-size: 14px;
   }
 
+  &__success {
+    font-size: 28px;
+    line-height: 30px;
+  }
+
   &__login-wrapper {
     @include size(4);
     position: relative;

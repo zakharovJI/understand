@@ -28,16 +28,17 @@ const actions = {
     });
   },
 
-  async getUserData({ dispatch, getters, commit }) {
-    commit('setUserData');
+  async getUserData({ dispatch, getters, commit }, params) {
 
-    // await api.getUserInfo(this.getters['auth/accessToken'])
-    //   .then(resp => {
-    //   })
-    //   .catch((err) => {
-    //     console.log('ERROR_GET_USER_DATA', err);
-    //     dispatch('auth/refreshToken');
-    //   });
+    await api.getUser(params)
+      .then(resp => {
+        console.log('user info got', resp);
+        commit('setUserData', resp.user);
+
+      })
+      .catch((err) => {
+        console.log('ERROR_GET_USER_DATA', err);
+      });
   },
 };
 
@@ -49,9 +50,9 @@ const mutations = {
   setUserToShow(state, id) {
     state.userToShow = state.userList.find(x => x.id === id);
   },
-  setUserData(state, payload) {
+  setUserData(state, user) {
     // state.authOk = true;
-    state.userData = {id: 1, name: 'Леонид', lastName: 'Захаров'};
+    state.userData = user;
   },
   removeUserData(state) {
 

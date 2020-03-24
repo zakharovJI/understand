@@ -2,6 +2,7 @@
 /* eslint no-shadow: 0 */
 import router from '@/router';
 import api from '@/api/index';
+import {use} from "vee-validate/dist/vee-validate.minimal.esm";
 
 const state = {
   accessToken: localStorage.getItem('accessToken') || null,
@@ -56,8 +57,15 @@ const actions = {
     return result;
   },
 
-  async updateData({dispatch}) {
-    await dispatch('user/getUserData', null, {root: true});
+  async updateData({dispatch, getters}) {
+    const userId = this.getters['auth/accessToken'];
+
+    console.log(userId);
+
+    await dispatch('user/getUserData', {
+      n: 'Lenya',
+      id_user: userId
+    }, {root: true});
   },
 };
 

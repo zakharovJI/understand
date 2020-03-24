@@ -22,17 +22,24 @@ export default {
     createAndSubmitPost() {
       const title = this.$refs.titleInput.selfValue;
       const content = this.$refs.contentInput.selfValue;
-      const id = this.$store.getters['auth/accessToken'];
+      const userId = this.$store.getters['auth/accessToken'];
 
       this.formData.append('n', 'Lenya');
       this.formData.append('title', title);
       this.formData.append('text', content);
       this.formData.append('id_category', 1);
-      this.formData.append('id_author', id);
+      this.formData.append('id_author', userId);
 
-    this.$store.dispatch('posts/createPost', this.formData).then(() => {
-      console.log("SUSSECCECCSDFSFDS")
-    })
+      this.$store.dispatch('posts/createPost', this.formData).then(() => {
+        this.$store.dispatch('posts/getPostList', {n: 'Lenya', id_user: userId})
+          .then(resp => {
+            this.formData = new FormData;
+            this.$store.commit('toggleCreatePostState');
+            this.$refs.titleInput.selfValue = null;
+            this.$refs.contentInput.selfValue = null;
+          })
+      });
+
     }
   }
 }

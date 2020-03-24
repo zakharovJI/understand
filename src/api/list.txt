@@ -15,8 +15,9 @@ $data['n' = Lenya]
 
 
 чтобы поставить лайк обращаешься к /api/likesPost.php POST и передаешь данные примерно так:
-$data['n' = Lenya, 'id_post' = ...]
+$data['n' = Lenya, 'id_post' = ..., id_user=...]
 
+чтобы убрать лайк /api/removeLike.php POST'ом, данные: [n='Lenya', id_post=..., id_user=...]
 
 чтобы добавить коммент обращаешься к /api/addPostComment.php PUT и передаешь данные примерно так:
 $data['n' = Lenya, 'id_post' = ..., 'text' = ..., 'id_author' = ...]

@@ -5,16 +5,18 @@ include ../../../node_modules/bempug/index
   +e('post-inner')()
     +e('user', {})
       +e('image', {t: 'img'})(:src="post.img")
-      +e('name', {}) {{post.author_name}}
+      +e('name', {}) {{name}}
+      +e('delete', {t: 'svg'})(v-if="selfPost" @click="deletePost")
+        use(xlink:href="#close")
     +e('content', {})(ref="content")
       +e('title', {}) {{post.title}}
-      +e('text', {})(v-html="post.text")
+      +e('text', {t: 'pre'}) {{post.text}}
     +e('actions', {})
       +e('item', {})(
         :class="{'post__item_clicked' : likeStateClicked}"
         @click="likeButtonClicked"
       )
-        +e('count', {}) {{post.marksCount}}
+        +e('count', {}) {{post.likes}}
         +e('icon', {t: 'svg'})
           use(v-if="!likeStateClicked" xlink:href="#like_inactive")
           use(v-else xlink:href="#like")
@@ -25,6 +27,8 @@ include ../../../node_modules/bempug/index
   +e('comments')
     +e('title', {}) Комментарии
     +e('content', {})()
-      user-comment(v-for="comment in post.comments" :key="comment.id" :comment="comment")
-    +e('input-wrapper', {})
-      brand-input(placeholder="Введите коментарий...")
+      user-comment(v-for="(comment, index) in post.commentaries" :key="index" :comment="comment")
+    +e('input-wrapper', {t: 'form'})(@submit.prevent="appendComment")
+      brand-input(placeholder="Введите коментарий..."
+        ref="commentInput"
+      )

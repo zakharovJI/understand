@@ -2,7 +2,7 @@ include ../../../node_modules/bempug/index
 - BEMPUG.modifier = '_';
 
 +b('user-comment')
-  +e('image', {t: 'img'})(:src="comment.image")
+  +e('image', {t: 'img'})(:src="comment.comm_pers_img")
   +e('content', {})
-    +e('name', {}) {{comment.name}}
+    +e('name', {}) {{name}}
     +e('text', {}) {{comment.text}}

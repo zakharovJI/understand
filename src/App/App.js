@@ -36,28 +36,19 @@ export default {
     }
   },
   mounted() {
+    const userId = this.$store.getters['auth/accessToken'];
 
-    // const isAuthenticated = this.$store.getters['auth/isAuthenticated'];
-    //
-    // if (!isAuthenticated) {
-    //   if (this.$route.path.indexOf('authorization') === -1) {
-    //     this.$router.push('/authorization')
-    //   }
-    // } else {
-    //   // const sessionUserId = parseInt(localStorage.getItem('authorizedUserId'));
-    //   //
-    //   // this.$store.dispatch('user/setCurrentUser', sessionUserId).then(() => {
-    //   //   // this.$router.push(`/user/id${sessionUserId}`)
-    //   // });
-    // }
-
-    this.$store.dispatch('posts/getPostList')
-      .then((resp) => {
-        console.log(resp, this.$store.getters['posts/getPostList']);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    this.$store.dispatch('user/getUserData', {
+      n: 'Lenya',
+      id_user: userId
+    }).then(() => {
+      this.$store.dispatch('posts/getPostList', {n: 'Lenya', id_user: userId})
+        .then((resp) => {
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
   },
   computed: {
     postCreateStateActive() {
