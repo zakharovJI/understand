@@ -5,11 +5,26 @@
   min-height: 300px;
 
   &:not(:first-child) {
-    padding-top: 15px;
+    margin-top: 15px;
+
+    @include to-lg() {
+      margin-top: 50px;
+    }
+  }
+
+  @include to-lg() {
+    flex-direction: column;
+    min-height: 500px;
   }
 
   &__post-inner {
-    @include size(8);
+    @include from-lg() {
+      @include size(8);
+    }
+    @include to-lg() {
+      @include size(12);
+      min-height: 300px;
+    }
     border: 1px solid $border-color;
     border-radius: 2px;
     background-color: white;
@@ -58,6 +73,10 @@
         font-size: 18px;
         line-height: 16px;
         font-family: "San Francisco Bold", sans-serif;
+
+        @include to-sm() {
+          font-size: 14px;
+        }
       }
 
       & #{$self}__text {
@@ -67,6 +86,10 @@
         padding-top: 10px;
         padding-right: 100px;
         white-space: normal;
+
+        @include to-sm() {
+          font-size: 12px;
+        }
       }
     }
 
@@ -77,6 +100,10 @@
       height: 40px;
       display: flex;
       align-items: center;
+
+      @include to-sm() {
+        justify-content: space-between;
+      }
 
       & #{$self}__item {
         display: flex;
@@ -98,6 +125,10 @@
         & #{$self}__text {
           font-size: 14px;
           line-height: 14px;
+
+          @include to-sm() {
+            font-size: 12px;
+          }
         }
 
         & #{$self}__icon {
@@ -121,14 +152,22 @@
   }
 
   &__comments {
-    @include size(4);
-    margin-left: 15px;
     border: 1px solid $border-color;
     background-color: white;
     display: flex;
     flex-direction: column;
     max-height: 300px;
     flex: 1;
+
+    @include from-lg() {
+      @include size(4);
+      margin-left: 15px;
+
+    }
+    @include to-lg() {
+      @include size(12);
+      margin-top: 15px;
+    }
 
     & #{$self}__title {
       font-size: 16px;
@@ -158,6 +197,10 @@
       font-size: 12px;
       line-height: 12px;
       color: $gray;
+
+      @include to-sm() {
+        font-size: 10px;
+      }
     }
   }
 }

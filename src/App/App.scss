@@ -2,28 +2,52 @@
 
   min-height: 100vh;
   width: 100vw;
-  min-width: 1440px;
   font-family: "San Francisco Regular", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @include container();
 
   &__content {
     display: flex;
     width: 100%;
     max-width: 1170px;
     padding: 15px 0 60px;
+
+    @include to-md() {
+      flex-direction: column;
+    }
   }
 
   &__view {
-    @include size(9);
     max-width: 1170px;
     padding-right: 15px;
+
+    @include from-lg() {
+      @include size(9);
+    }
+    @include to-lg() {
+      @include size(8);
+    }
+    @include to-md() {
+      @include size(12);
+      padding-right: 0;
+    }
   }
 
   &__aside {
-    @include size(3);
     background-color: white;
+
+    @include from-lg() {
+      @include size(3);
+    }
+    @include to-lg() {
+      @include size(4);
+    }
+    @include to-md() {
+      display: none;
+    }
   }
 
   &_theme-light {

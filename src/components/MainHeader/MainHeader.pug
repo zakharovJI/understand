@@ -1,20 +1,29 @@
 include ../../../node_modules/bempug/index
 - BEMPUG.modifier = '_';
 
-+b('main-header', {t: 'header'})
++b('main-header', {t: 'header'})(:class="{'main-header_open' : menuStateShow}")
   +e('content')
     +e('logo', {t: 'svg'})
       use(xlink:href="#logo")
-    +e('menu-list', {t: 'menu'})
-      +e('item') Горячее
-      +e('item') Свежее
-      +e('item') Лучшее
-    +e('actions')
-      +e('item')(@click="createPostStateToggle")
-        +e('icon', {t: 'svg'})
-          use(xlink:href="#write")
-        +e('text') Написать пост
-      +e('item')(@click="loginButtonClicked")
-        +e('text') {{isAuthenticated ? 'Выйти' : 'Войти'}}
-        +e('icon', {t: 'svg'})
-          use(xlink:href="#login")
+    +e('inner', {})
+      +e('menu-list', {t: 'menu'})
+        +e('item') Горячее
+        +e('item') Свежее
+        +e('item') Лучшее
+      +e('actions')
+        +e('item', {m: 'write'})(@click="createPostStateToggle")
+          +e('icon', {t: 'svg'})
+            use(xlink:href="#write")
+          +e('text') Написать пост
+        +e('item')(@click="loginButtonClicked")
+          +e('text') {{isAuthenticated ? 'Выйти' : 'Войти'}}
+          +e('icon', {t: 'svg'})
+            use(xlink:href="#login")
+  +e('burger', {})(
+    @click="toggleMenuStateShow"
+    :class="{'main-header__burger_open' : menuStateShow}"
+  )
+    span
+    span
+    span
+    span

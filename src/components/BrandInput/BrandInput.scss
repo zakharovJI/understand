@@ -9,6 +9,10 @@
   font-weight: 600;
   cursor: text;
   width: 100%;
+
+  @include to-sm() {
+    font-size: 12px;
+  }
   
   #{$self}__control {
     height: 100%;
@@ -25,6 +29,7 @@
     transform-origin: left;
     color: inherit;
     cursor: inherit;
+
   }
   
   #{$self}__error {
@@ -103,38 +108,6 @@
     
     #{$self}__label {
       display: none;
-    }
-  }
-  
-  &_search {
-    color: $light-gray;
-    border: 1px solid $light;
-    background-color: #f8f8f8;
-    font-size: 12px;
-    font-weight: 500;
-    transition: all .25s linear;
-    
-    #{$self}__field {
-      padding-left: 50px;
-      min-height: 38px;
-      font-weight: inherit;
-      padding-top: 0;
-    }
-    
-    #{$self}__label {
-      padding-left: 50px;
-      font-weight: inherit;
-    }
-    
-    #{$self}__error {
-      padding-left: 50px;
-    }
-    
-    &.brand-input_focused {
-      background-color: white;
-      #{$self}__label {
-        display: none;
-      }
     }
   }
 

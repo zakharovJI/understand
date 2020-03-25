@@ -42,6 +42,10 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
+
+  &.no-overflow {
+    overflow: hidden;
+  }
 }
 
 ol, ul {

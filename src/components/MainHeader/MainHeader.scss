@@ -13,15 +13,34 @@
     align-items: center;
   }
 
+  &__inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    @include to-sm() {
+      display: none;
+    }
+  }
+
   &__menu-list {
     margin-left: 89px;
     display: flex;
     align-items: center;
+
+    @include to-sm() {
+      flex-direction: column;
+      padding-top: 50px;
+      margin-left: 0;
+    }
+
   }
 
   & #{$self}__logo {
     width: 90px;
     height: 30px;
+    z-index: 101;
   }
 
   & #{$self}__item {
@@ -31,7 +50,18 @@
     display: flex;
     align-items: center;
     color: $primary-font-color;
-    padding: 20px 20px;
+    padding: 20px;
+
+    @include to-md() {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    @include to-sm() {
+      width: 100%;
+      padding: 15px;
+      border-top: 1px solid $border-color;
+    }
 
     &_active {
       color: $primary-blue;
@@ -42,19 +72,47 @@
     margin-left: auto;
     display: flex;
     align-items: center;
+    height: 100%;
+
+    @include to-sm() {
+      height: max-content;
+      flex-direction: column;
+    }
 
     & #{$self}__item {
-      padding: 20px 15px;
-      color: $primary-blue;
+      color: black;
+      padding: 20px 0 20px 15px;
+      height: 100%;
 
-      &:last-child{
-        color: black;
-        padding-right: 0;
+      &_write {
+        color: $primary-blue;
+        padding-right: 15px;
       }
+
+      @include to-md() {
+        padding: 5px;
+      }
+      @include sm-block() {
+        padding: 0 15px;
+      }
+      @include to-sm() {
+        width: 100%;
+        padding: 15px;
+        border-top: 1px solid $border-color;
+
+        &:last-child {
+          border-bottom: 1px solid $border-color;
+        }
+      }
+
     }
 
     & #{$self}__text {
       color: inherit;
+
+      @include sm-block() {
+        display: none;
+      }
     }
 
     & #{$self}__icon {
@@ -63,10 +121,103 @@
       height: 12px;
       margin-right: 9px;
 
+      @include sm-block() {
+        width: 17px;
+        height: 17px;
+        margin: 0;
+      }
+
+      @include to-sm() {
+        display: none;
+      }
+
       &:last-child {
         margin-right: 0;
         margin-left: 9px;
+
+        @include sm-block() {
+          margin: 0;
+        }
       }
+    }
+  }
+
+  &__burger {
+    width: 60px;
+    height: 45px;
+    position: relative;
+    transform: rotate(0deg) scale(.5);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+    margin-right: -13px;
+    z-index: 101;
+
+    @include from-sm() {
+      display: none;
+    }
+
+    span {
+      display: block;
+      position: absolute;
+      height: 4px;
+      width: 100%;
+      background: $primary-blue;
+      border-radius: 9px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+
+      &:nth-child(1) {
+        top: 0px;
+      }
+
+      &:nth-child(2), &:nth-child(3) {
+        top: 18px;
+      }
+
+      &:nth-child(4) {
+        top: 36px;
+      }
+    }
+
+    &_open {
+      transform: rotate(0deg) scale(.5);
+
+      span {
+        &:nth-child(1) {
+          top: 18px;
+          width: 0%;
+          left: 50%;
+        }
+
+        &:nth-child(2) {
+          transform: rotate(45deg);
+        }
+
+        &:nth-child(3) {
+          transform: rotate(-45deg);
+        }
+
+        &:nth-child(4) {
+          top: 18px;
+          width: 0%;
+          left: 50%;
+        }
+      }
+    }
+  }
+
+  &_open {
+    & #{$self}__inner {
+      display: block;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      z-index: 100;
+      position: fixed;
     }
   }
 }

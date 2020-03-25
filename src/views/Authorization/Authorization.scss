@@ -7,6 +7,10 @@
   position: relative;
   background-color: $background-color;
 
+  @include to-sm {
+    width: 100%;
+  }
+
   &__content {
     width: 100%;
     max-width: 1024px;
@@ -15,12 +19,29 @@
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+
+    @include to-md() {
+      flex-direction: column;
+    }
   }
 
   &__title {
     font-size: 40px;
     color: black;
-    @include size(6);
+
+    @include from-md() {
+      @include size(6);
+    }
+
+    @include to-md() {
+      @include size(12);
+      max-width: 400px;
+      padding-bottom: 50px;
+    }
+    @include to-sm() {
+      max-width: 100%;
+      font-size: 28px;
+    }
   }
 
   &__error {
@@ -37,7 +58,16 @@
   }
 
   &__login-wrapper {
-    @include size(4);
+    @include from-md() {
+      @include size(4);
+    }
+    @include to-md() {
+      @include size(12);
+      max-width: 300px;
+    }
+    @include to-sm() {
+      max-width: 100%;
+    }
     position: relative;
     display: flex;
     flex-direction: column;

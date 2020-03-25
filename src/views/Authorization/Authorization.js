@@ -30,6 +30,10 @@ export default {
 
   },
   mounted() {
+    document.querySelector('body').style.backgroundColor = '#f5f5f5'
+  },
+  beforeDestroy() {
+    document.querySelector('body').style.backgroundColor = 'unset'
   },
   methods: {
     submitForm() {

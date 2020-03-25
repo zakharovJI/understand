@@ -9,7 +9,7 @@ export default {
   },
   data() {
     return {
-      
+      menuStateShow: false
     }
   },
   computed: {
@@ -28,6 +28,19 @@ export default {
     },
     createPostStateToggle() {
       this.$store.commit('toggleCreatePostState');
+
+      if (window.innerWidth < 768) {
+        this.toggleMenuStateShow();
+      }
+    },
+    toggleMenuStateShow() {
+      this.menuStateShow = !this.menuStateShow;
+
+      if (this.menuStateShow) {
+        document.querySelector('body').classList.add('no-overflow');
+      } else {
+        document.querySelector('body').classList.remove('no-overflow');
+      }
     }
   }
 }
