@@ -54,7 +54,7 @@
     "babel-loader": "^8.0.5",
     "bempug": "^1.1.1",
     "change-case": "^4.1.1",
-    "node-sass": "~4.9.4",
+    "node-sass": "~4.13.1",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "rollup-plugin-commonjs": "^10.0.1",
